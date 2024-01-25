@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -1618,13 +1618,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SproutsLand_Grass_18: 1450328576
-      SproutsLand_Grass_52: 1826958887
+      SproutsLand_Grass_32: -1902317702
       SproutsLand_Grass_23: 1005172230
       SproutsLand_Grass_49: -1216321886
       SproutsLand_Grass_20: -430657798
       SproutsLand_Grass_13: 556930418
-      SproutsLand_Grass_19: -2061669361
+      SproutsLand_Grass_1: -1976869192
       SproutsLand_Grass_62: 1277096988
       SproutsLand_Grass_5: -843951710
       SproutsLand_Grass_48: -113521988
@@ -1638,6 +1637,7 @@ TextureImporter:
       SproutsLand_Grass_51: -1392183468
       SproutsLand_Grass_26: 1832467234
       SproutsLand_Grass_58: -278418793
+      SproutsLand_Grass_52: 1826958887
       SproutsLand_Grass_43: -621653433
       SproutsLand_Grass_12: -661527657
       SproutsLand_Grass_30: -2009865098
@@ -1683,12 +1683,12 @@ TextureImporter:
       SproutsLand_Grass_66: 1705133887
       SproutsLand_Grass_37: 1014888971
       SproutsLand_Grass_35: -1644614638
-      SproutsLand_Grass_16: -1176274070
       SproutsLand_Grass_15: 762296552
+      SproutsLand_Grass_18: 1450328576
       SproutsLand_Grass_6: -669627952
-      SproutsLand_Grass_32: -1902317702
+      SproutsLand_Grass_16: -1176274070
       SproutsLand_Grass_45: -1094440154
-      SproutsLand_Grass_1: -1976869192
+      SproutsLand_Grass_19: -2061669361
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
