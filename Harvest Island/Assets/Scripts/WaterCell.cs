@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class WaterCell : GridCell
+public class WaterCell : GridCell, IPointerClickHandler
 {
     private CellType type;
 
@@ -14,15 +15,8 @@ public class WaterCell : GridCell
         this.type = type;
     }
 
-    public override void test()
+    public override void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("WaterCell");
-    }
-
-    public GameObject InstantiateCell()
-    {
-        GameObject current = GameObject.Instantiate(cellPrefab);
-
-        return current;
     }
 }

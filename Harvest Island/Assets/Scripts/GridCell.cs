@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class GridCell : MonoBehaviour
+public class GridCell : MonoBehaviour, IPointerClickHandler
 {
    // private float size;
   //  private CellType type;
@@ -19,9 +20,9 @@ public class GridCell : MonoBehaviour
 
     }
 
-    public virtual void test()
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("test");
+        Debug.Log(eventData.pointerClick);
+
     }
-  
 }

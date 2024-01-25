@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SandCell : GridCell
 {
@@ -14,15 +15,8 @@ public class SandCell : GridCell
         this.type = type;
     }
 
-    public override void test()
+    public override void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("SandCell");
-    }
-
-    public GameObject InstantiateCell()
-    {
-        GameObject current = GameObject.Instantiate(cellPrefab);
-
-        return current;
     }
 }
