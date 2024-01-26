@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,16 +13,21 @@ public class PlayerController : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
 
+    PhotonView view; 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        view = GetComponent<PhotonView>();
     }
 
     private void FixedUpdate()
     {
-        Move();
-
+        if (view.IsMine)
+        {
+            Move();
+        }
     }
 
     /// <summary>

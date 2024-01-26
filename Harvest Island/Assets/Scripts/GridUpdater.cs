@@ -22,7 +22,7 @@ public class GridUpdater : MonoBehaviour
     {
         tileMap.SetTile(position, grass);
         tileMap.SetTile(position1, grass);
-        tileMap.SetTile(position2, sand);
+
     }
 
     // Update is called once per frame
