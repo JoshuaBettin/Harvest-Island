@@ -40,13 +40,19 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * Speed * Time.deltaTime * 100, rb.velocity.y);
 
-        if (Input.GetAxis("Horizontal") < 0 && spriteRenderer.flipX == false)
+        if (Input.GetAxis("Horizontal") < 0 && this.transform.localScale.x >= 0)
         {
-            spriteRenderer.flipX = true;
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+
+            this.transform.localScale = newScale;
         }
-        if (Input.GetAxis("Horizontal") > 0 && spriteRenderer.flipX == true)
+        if (Input.GetAxis("Horizontal") > 0 && this.transform.localScale.x < 0)
         {
-            spriteRenderer.flipX = false;
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+
+            this.transform.localScale = newScale;
         }
 
         // Move Vertical

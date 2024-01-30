@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Photon.Pun;
 
 public class GridUpdater : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class GridUpdater : MonoBehaviour
 
     public void ChangeTile(Vector3Int position, GridCell.CellType type)
     {
+        // RPC
         if (type == GridCell.CellType.Soil)
         {
             tileMap.SetTile(position, sand);

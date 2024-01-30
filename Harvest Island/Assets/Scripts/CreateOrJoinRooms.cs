@@ -18,12 +18,20 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject roomListingPrefab;
 
+
     private List<RoomInfo> cachedRoomList = new List<RoomInfo>();
 
 
-    public TextMeshProUGUI textfield; 
+    public TextMeshProUGUI textfield;
+
+    public List<RoomInfo> newList;
+    bool alreadyInList = false;
 
     public void Start()
+    {
+        
+    }
+    public void Update()
     {
 
     }
@@ -37,8 +45,6 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("GameScene");
         //  float loadPercentage = PhotonNetwork.LevelLoadingProgress;
 
-
-        UpdateUI();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -52,7 +58,8 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
                 for (int i = 0; i < cachedRoomList.Count; i++)
                 {
 
-                    List<RoomInfo> newList = cachedRoomList;
+                    newList = cachedRoomList;
+                    alreadyInList = false;
 
                     if (cachedRoomList[i].Name == room.Name)
                     {
@@ -60,15 +67,29 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
                         {
                             newList.Remove(newList[i]);
                         }
+                     /*   if (room.PlayerCount == 0)
+                        {
+                            newList.Remove(newList[i]);
+                        }*/
+                        else if (room.PlayerCount > cachedRoomList[i].PlayerCount)
+                        {
+                            newList.Remove(newList[i]); // old room gets deleted and room with new playercount gets added
+                                                        // kinda indirect solution
+                        }
+                        else
+                        {
+                            alreadyInList = true;
+                        }
                     }
-                    else
-                    {
-                        newList.Add(room);  //room name wird falsch gesetzt? 
-
-                    }                       // Krampf
-
-                    cachedRoomList = newList;
                 }
+
+                if (!alreadyInList)
+                {
+                    newList.Add(room);  //room name wird falsch gesetzt? 
+
+                }                       // Krampf
+                alreadyInList = false;
+                cachedRoomList = newList;
             }
         }
 
@@ -84,6 +105,7 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
         
         foreach (var room in cachedRoomList)
         {
+            Debug.Log(cachedRoomList.Count);
             GameObject roomItem = Instantiate(roomListingPrefab, roomListingParent);
 
             roomItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.Name;
