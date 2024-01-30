@@ -5,18 +5,30 @@ using UnityEngine.EventSystems;
 
 public class SandCell : GridCell
 {
-    private CellType type;
+    public CellType type;
 
     [SerializeField]
     private GameObject cellPrefab;
 
+    private GridUpdater gridUpdater;
+
+    private void Start()
+    {
+        gridUpdater = FindObjectOfType<GridUpdater>();
+        this.type = CellType.Sand;
+    }
+    
     public SandCell(CellType type) : base(type)
     {
-        this.type = type;
+        
     }
-
+    
     public override void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("SandCell");
+
+        Debug.Log(eventData.hovered.Count);
+
+        gridUpdater.ChangeTile(Vector3Int.FloorToInt(eventData.pointerCurrentRaycast.worldPosition), type);
     }
 }

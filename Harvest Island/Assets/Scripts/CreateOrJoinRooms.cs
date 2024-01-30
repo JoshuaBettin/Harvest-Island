@@ -5,39 +5,97 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using System;
 
 public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private TMP_InputField createInput, joinInput;
-    [SerializeField]
-    private TMP_Text roomNames; 
+    private TMP_InputField createInput;
 
+    [SerializeField]
+    private Transform roomListingParent;
+
+    [SerializeField]
+    private GameObject roomListingPrefab;
+
+    private List<RoomInfo> cachedRoomList = new List<RoomInfo>();
+
+
+    public TextMeshProUGUI textfield; 
+
+    public void Start()
+    {
+
+    }
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(createInput.text);
     }
 
-    public void JoinRoom()
-    {
-        
-        PhotonNetwork.JoinRoom(joinInput.text);
-    }
-
     public override void OnJoinedRoom()
     {
-       PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("GameScene");
+        //  float loadPercentage = PhotonNetwork.LevelLoadingProgress;
+
+
+        UpdateUI();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        roomNames.text = "Rooms: \n";
-        Debug.Log("Update");
+        if (cachedRoomList.Count <= 0) cachedRoomList = roomList;
 
-        for( int i = 0; i < roomList.Count; i++)
+        else
         {
-            Debug.Log("roomName");
-            roomNames.text += roomList[i].Name;
+            foreach (var room in roomList)
+            {
+                for (int i = 0; i < cachedRoomList.Count; i++)
+                {
+
+                    List<RoomInfo> newList = cachedRoomList;
+
+                    if (cachedRoomList[i].Name == room.Name)
+                    {
+                        if (room.RemovedFromList)
+                        {
+                            newList.Remove(newList[i]);
+                        }
+                    }
+                    else
+                    {
+                        newList.Add(room);  //room name wird falsch gesetzt? 
+
+                    }                       // Krampf
+
+                    cachedRoomList = newList;
+                }
+            }
         }
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        foreach (Transform roomItem in roomListingParent)
+        {
+            Destroy(roomItem.gameObject);
+        }
+        
+        foreach (var room in cachedRoomList)
+        {
+            GameObject roomItem = Instantiate(roomListingPrefab, roomListingParent);
+
+            roomItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.Name;
+            roomItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.PlayerCount + "/16";
+
+            roomItem.transform.GetComponent<JoinRoomButton>().Name = room.Name;
+        }
+    }
+
+    public void TestRooms()
+    {
+        GameObject roomItem = Instantiate(roomListingPrefab, roomListingParent);
+
     }
 }

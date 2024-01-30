@@ -40,4 +40,16 @@ public class GridUpdater : MonoBehaviour
 
         if (timer > 1.5) timer = 0; 
     }
+
+    public void ChangeTile(Vector3Int position, GridCell.CellType type)
+    {
+        if (type == GridCell.CellType.Soil)
+        {
+            tileMap.SetTile(position, sand);
+        }
+        if (type == GridCell.CellType.Sand)
+        {
+            tileMap.SetTile(position, grass);
+        }
+    }
 }

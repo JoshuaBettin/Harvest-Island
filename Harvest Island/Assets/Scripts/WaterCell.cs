@@ -10,9 +10,13 @@ public class WaterCell : GridCell, IPointerClickHandler
     [SerializeField]
     private GameObject cellPrefab;
 
+    private void Start()
+    {
+        this.type = CellType.Water;
+    }
     public WaterCell(CellType type) : base(type)
     {
-        this.type = type;
+        
     }
 
     public override void OnPointerClick(PointerEventData eventData)
