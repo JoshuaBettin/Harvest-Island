@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,14 @@ public class SoilCell : GridCell
 {
     public CellType type;
 
-    [SerializeField]
-    private GameObject cellPrefab;
-
     private GridUpdater gridUpdater;
+
     public SoilCell(CellType type) : base(type)
     {
 
     }
 
-    public void Start()
+    private void Start()
     {
         gridUpdater = FindObjectOfType<GridUpdater>();
         this.type = CellType.Soil;
@@ -26,7 +25,15 @@ public class SoilCell : GridCell
     {
         Debug.Log("SoilCell");
         Debug.Log(eventData.hovered.Count);
-     
+
+
+        //pv.RPC("ChangeTile", RpcTarget.All, eventData.pointerCurrentRaycast.worldPosition, type);
         gridUpdater.ChangeTile(Vector3Int.FloorToInt(eventData.pointerCurrentRaycast.worldPosition), type);
+    }
+
+    [PunRPC]
+    public void ChangeTile(Vector3 vector, GridCell.CellType type)
+    {
+       // gridUpdater.ChangeTile(vector, type);
     }
 }

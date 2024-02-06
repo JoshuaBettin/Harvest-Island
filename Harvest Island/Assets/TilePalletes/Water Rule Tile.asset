@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
+  m_Name: Water Rule Tile
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: -360610773, guid: 963fb64015b841746b9b663cfc677bdd, type: 3}
+  m_DefaultGameObject: {fileID: 4021111163604084682, guid: 5536dc768b7831441acfc1e326a43455, type: 3}
+  m_DefaultColliderType: 1
+  m_TilingRules: []

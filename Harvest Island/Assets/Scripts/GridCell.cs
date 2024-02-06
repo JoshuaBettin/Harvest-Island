@@ -20,6 +20,7 @@ public class GridCell : MonoBehaviour, IPointerClickHandler
 
     }
 
+    
     public virtual void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerClick);
