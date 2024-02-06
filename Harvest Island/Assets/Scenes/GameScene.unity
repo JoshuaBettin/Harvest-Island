@@ -28845,7 +28845,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 1452872298}
-  inventorySize: 42
+  inventoryData: {fileID: 11400000, guid: 5ee4d3493f9cd0940a5266e11b62f6ba, type: 2}
+  initialItems:
+  - quantity: 5
+    item: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: 2e1b395ff2cd8144e8aa51515e9689b2, type: 2}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 3
+    item: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
+  - quantity: 3
+    item: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
 --- !u!4 &1202178530
 Transform:
   m_ObjectHideFlags: 0
@@ -31692,11 +31703,6 @@ MonoBehaviour:
   contentPanel: {fileID: 1199158599}
   itemDescription: {fileID: 1381941379}
   mouseFollower: {fileID: 648306420}
-  sprite: {fileID: 1714691611, guid: 52274f9adb038974585fbf918b34fea2, type: 3}
-  sprite2: {fileID: -1773530725, guid: 52274f9adb038974585fbf918b34fea2, type: 3}
-  quantity: 1
-  title: Axe
-  description: 'Try chopping wood '
 --- !u!1 &1460814205
 GameObject:
   m_ObjectHideFlags: 0
