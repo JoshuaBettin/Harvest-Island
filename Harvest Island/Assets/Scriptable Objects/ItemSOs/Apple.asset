@@ -9,11 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998a331687bd76e48b80cad1de21e38d, type: 3}
+  m_Script: {fileID: 11500000, guid: bfb80acc2a78275488d45971318575f5, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
   isStackable: 1
   maxStackSize: 99
   title: Apple
-  description: an apple a day keeps the doctor away
+  description: 'Ein Apfel kann schimmeln, was kannst du?
+
+    Kann man auch vorher
+    essen.'
   sprite: {fileID: 526465315, guid: 08f867c61b34d444a81ee6e79c0bdf35, type: 3}
+  modifierDataList:
+  - statModifier: {fileID: 11400000, guid: 575f82e9c800b964085ea4ea55da9d39, type: 2}
+    value: 10

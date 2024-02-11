@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998a331687bd76e48b80cad1de21e38d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d8c0221470aac048bb70a9daac79b19, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
   isStackable: 0
   maxStackSize: 1
   title: Axe
-  description: Faster than a beaver
   sprite: {fileID: 1714691611, guid: 52274f9adb038974585fbf918b34fea2, type: 3}
+  description: Chops hard
+  defaultParameterList:
+  - itemParameter: {fileID: 11400000, guid: 7e2479f4f3746fa45b20de32fa65a973, type: 2}
+    value: 100

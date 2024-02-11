@@ -1,9 +1,11 @@
 using Inventory.UI;
-using Inventory.Data; 
+using Inventory.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+using System.Text;
 
 namespace Inventory
 {
@@ -21,6 +23,8 @@ namespace Inventory
         {
             PrepareUI();
             PrepareInventoryData();
+
+            inventoryUI.Show(); inventoryUI.Hide(); // to fix Bug: else u need to double press "I"-Key at the start
         }
 
         private void PrepareInventoryData()
@@ -57,8 +61,10 @@ namespace Inventory
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
+                Debug.Log("I");
                 if (inventoryUI.isActiveAndEnabled == false)
                 {
+                    Debug.Log("Show");
                     inventoryUI.Show();
                     foreach (var item in inventoryData.GetCurrentInventoryState())
                     {
@@ -81,7 +87,24 @@ namespace Inventory
                 return;
             }
             ItemSO item = inventoryItem.item;
-            inventoryUI.UpdateDescription(itemIndex, item.Sprite, item.Title, item.Description);
+            string description = PrepareDescription(inventoryItem);
+
+            inventoryUI.UpdateDescription(itemIndex, item.Sprite, item.Title, description);
+        }
+
+        private string PrepareDescription(InventoryItem inventoryItem)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(inventoryItem.item.Description);
+            sb.AppendLine();
+            for (int i = 0; i < inventoryItem.itemState.Count; i++)
+            {
+                sb.Append(  $"{inventoryItem.itemState[i].itemParameter.ParameterName} " +
+                            $"{inventoryItem.itemState[i].value} / " +
+                            $"{inventoryItem.item.DefaultParameterList[i].value}");
+                sb.AppendLine();
+            }
+            return sb.ToString();
         }
 
         private void HandleSwapItems(int itemIndex1, int itemIndex2)
@@ -99,7 +122,24 @@ namespace Inventory
 
         private void HandleItemActionRequest(int itemIndex)
         {
-            throw new NotImplementedException();
+            InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex);
+            if (inventoryItem.isEmpty)
+            {
+                return;
+            }
+
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
+            if (destroyableItem != null)
+            {
+                Debug.Log("Remove Item");
+                inventoryData.RemoveItem(itemIndex, 1);
+            }
+
+            IItemAction itemAction = inventoryItem.item as IItemAction;
+            if(itemAction != null)
+            {
+                itemAction.PerformAction(GameObject.FindGameObjectWithTag("Player"), inventoryItem.itemState);
+            }
         }
     }
 }

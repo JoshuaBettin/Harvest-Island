@@ -12,6 +12,17 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     public PhotonView pv;
 
+    private Canvas canvas;
+
+    private void Awake()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            GameObject obj = GameObject.FindGameObjectWithTag("Canvas");
+            canvas = obj.GetComponent<Canvas>();
+            canvas.worldCamera = cameraHolder.GetComponent<Camera>();
+        }
+    }
     private void Start()
     {
         if(!pv.IsMine)

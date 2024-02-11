@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ namespace Inventory.Data
             }
         }
 
-        public int AddItem(ItemSO item, int quantity)
+        public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemState = null)
         {
             if (!item.IsStackable)
             {
@@ -34,7 +35,7 @@ namespace Inventory.Data
                 {
                     while (quantity > 0 && !IsInventoryFull())
                     {
-                        quantity -= AddItemToFirstFreeSlot(item, 1);
+                        quantity -= AddItemToFirstFreeSlot(item, 1, itemState);
                     }
                     InformAboutChange();
                     return quantity;
@@ -46,12 +47,13 @@ namespace Inventory.Data
             return quantity;
         }
 
-        private int AddItemToFirstFreeSlot(ItemSO item, int quantity)
+        private int AddItemToFirstFreeSlot(ItemSO item, int quantity, List<ItemParameter> itemState = null)
         {
             InventoryItem newItem = new InventoryItem
             {
                 item = item,
                 quantity = quantity,
+                itemState = new List<ItemParameter>(itemState == null ? item.DefaultParameterList : itemState)
             };
 
             for (int i = 0; i < inventoryItems.Count; i++)
@@ -113,7 +115,7 @@ namespace Inventory.Data
             {
                 if (inventoryItems[i].isEmpty) continue;
                 returnValue[i] = inventoryItems[i];
-            }
+            }       
             return returnValue;
         }
 
@@ -134,6 +136,41 @@ namespace Inventory.Data
         {
             OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
         }
+
+        public void RemoveItem(int itemIndex, int quantity)
+        {
+            if(inventoryItems.Count > itemIndex)
+            {
+                
+                if (inventoryItems[itemIndex].isEmpty) return;
+
+                // remove item when durability 0 if item has parameter durability
+                IDestroyableItem destroyableItem = inventoryItems[itemIndex].item as IDestroyableItem;
+                if(destroyableItem != null)
+                {
+                    UnityEngine.Debug.Log("RemoveItemIfIDestroyable");
+                    for (int i = 0; i < inventoryItems[itemIndex].itemState.Count; i++)
+                    {
+                        if (inventoryItems[itemIndex].itemState[i].value <= 0)
+                        {
+                            UnityEngine.Debug.Log("RemoveItemIfItemStateValue=0");
+                            inventoryItems[itemIndex] = InventoryItem.GetEmptyItem();
+                        }
+                    }
+                }         //  ? weil selbstgeschrieben eh nö
+
+                int remainingQuantity = inventoryItems[itemIndex].quantity - quantity;
+                if (remainingQuantity <= 0)
+                {
+                    inventoryItems[itemIndex] = InventoryItem.GetEmptyItem();
+                }
+                else
+                {
+                    inventoryItems[itemIndex] = inventoryItems[itemIndex].ChangeQuantity(remainingQuantity);
+                }
+                InformAboutChange();
+            }
+        }
     }
 
     [Serializable]
@@ -141,6 +178,7 @@ namespace Inventory.Data
     {
         public int quantity;
         public ItemSO item;
+        public List<ItemParameter> itemState;
         public bool isEmpty => item == null;
 
         public InventoryItem ChangeQuantity(int newQuantity)
@@ -148,7 +186,8 @@ namespace Inventory.Data
             return new InventoryItem
             {
                 item = this.item,
-                quantity = newQuantity
+                quantity = newQuantity,
+                itemState = new List<ItemParameter>(this.itemState)
             };
         }
 
@@ -157,6 +196,7 @@ namespace Inventory.Data
         {
             item = null,
             quantity = 0,
+            itemState = new List<ItemParameter>()
         };
     }
 }

@@ -13,32 +13,12 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
   inventoryItems:
+  - quantity: 99
+    item: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
   - quantity: 1
     item: {fileID: 11400000, guid: 2e1b395ff2cd8144e8aa51515e9689b2, type: 2}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 2
+  - quantity: 8
     item: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 4
-    item: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
+  - quantity: 1
+    item: {fileID: 11400000, guid: 2e1b395ff2cd8144e8aa51515e9689b2, type: 2}
   size: 14

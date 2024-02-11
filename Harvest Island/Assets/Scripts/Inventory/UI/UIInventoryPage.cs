@@ -108,7 +108,10 @@ namespace Inventory.UI
 
         private void HandleShowItemActions(UIInventoryItem UIItem)
         {
-            throw new NotImplementedException();
+            int index = listOfUIItems.IndexOf(UIItem);
+            if (index == -1) return;
+
+            OnItemActionRequested?.Invoke(index);
         }
 
         private void HandleSwap(UIInventoryItem UIItem)
