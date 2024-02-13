@@ -139,25 +139,10 @@ namespace Inventory.Data
 
         public void RemoveItem(int itemIndex, int quantity)
         {
-            if(inventoryItems.Count > itemIndex)
+            if (inventoryItems.Count > itemIndex)
             {
-                
-                if (inventoryItems[itemIndex].isEmpty) return;
 
-                // remove item when durability 0 if item has parameter durability
-                IDestroyableItem destroyableItem = inventoryItems[itemIndex].item as IDestroyableItem;
-                if(destroyableItem != null)
-                {
-                    UnityEngine.Debug.Log("RemoveItemIfIDestroyable");
-                    for (int i = 0; i < inventoryItems[itemIndex].itemState.Count; i++)
-                    {
-                        if (inventoryItems[itemIndex].itemState[i].value <= 0)
-                        {
-                            UnityEngine.Debug.Log("RemoveItemIfItemStateValue=0");
-                            inventoryItems[itemIndex] = InventoryItem.GetEmptyItem();
-                        }
-                    }
-                }         //  ? weil selbstgeschrieben eh nö
+                if (inventoryItems[itemIndex].isEmpty) return;
 
                 int remainingQuantity = inventoryItems[itemIndex].quantity - quantity;
                 if (remainingQuantity <= 0)
@@ -169,7 +154,31 @@ namespace Inventory.Data
                     inventoryItems[itemIndex] = inventoryItems[itemIndex].ChangeQuantity(remainingQuantity);
                 }
                 InformAboutChange();
+
             }
+        }
+
+        public void CheckIfItemStateEqualZero()
+        {
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                for (int j = 0; j < inventoryItems[i].itemState.Count; j++)
+                {
+                    if (inventoryItems[i].itemState[j].value == 0)
+                    {
+                        IEquippableItem equippableItem = inventoryItems[i].item as IEquippableItem;
+                        PlaySound(equippableItem.breakSFX, 0.75f);
+                        inventoryItems[i] = InventoryItem.GetEmptyItem();
+                        InformAboutChange();
+                    }
+                }
+            }
+        }
+
+        public void PlaySound(AudioClip audioClip, float volumeScale)
+        {
+            AudioSource audioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+            if (audioSource != null) audioSource.PlayOneShot(audioClip, volumeScale);
         }
     }
 

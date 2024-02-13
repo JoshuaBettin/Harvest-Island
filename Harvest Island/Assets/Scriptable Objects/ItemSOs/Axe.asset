@@ -16,7 +16,11 @@ MonoBehaviour:
   maxStackSize: 1
   title: Axe
   sprite: {fileID: 1714691611, guid: 52274f9adb038974585fbf918b34fea2, type: 3}
+  audioSource: {fileID: 7546729426347456372, guid: 38370d1e075c2744e8a4bf1bb99e03c9, type: 3}
   description: Chops hard
   defaultParameterList:
   - itemParameter: {fileID: 11400000, guid: 7e2479f4f3746fa45b20de32fa65a973, type: 2}
     value: 100
+  <actionSFX>k__BackingField: {fileID: 8300000, guid: 984ed3ef37649cf4da55c69bdb523832, type: 3}
+  <dropSFX>k__BackingField: {fileID: 8300000, guid: 96f1ef0bc107cef40941fcfef0afd47a, type: 3}
+  <breakSFX>k__BackingField: {fileID: 8300000, guid: 3cc70f71d3576a04ab1778811c7b17f7, type: 3}

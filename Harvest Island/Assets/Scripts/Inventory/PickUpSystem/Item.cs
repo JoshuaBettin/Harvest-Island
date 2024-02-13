@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     [SerializeField]
     private int quantity;
     [SerializeField]
-    private AudioSource audioSource;
+    private AudioClip equipSFX;
     [SerializeField]
     private float duration = 0.3f;
     #endregion
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
     #region Properties
     public ItemSO InventoryItem { get => inventoryItem; set => inventoryItem = value; }
     public int Quantity { get => quantity; set => quantity = value; }
-    public AudioSource AudioSource { get => audioSource; set => audioSource = value; }
+    public AudioClip EquipSFX { get => equipSFX; set => equipSFX = value; }
     public float Duration { get => duration; set => duration = value; }
     #endregion
 
@@ -39,12 +39,13 @@ public class Item : MonoBehaviour
 
     public void PlayPickupSound()
     {
-        audioSource.Play();
+        AudioSource audioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+        audioSource.PlayOneShot(EquipSFX);
     }
 
     private IEnumerator AnimatePickup()
     {
-        audioSource.Play();
+        PlayPickupSound();
         Vector3 startScale = transform.localScale;
         Vector3 endScale = Vector3.zero;
 

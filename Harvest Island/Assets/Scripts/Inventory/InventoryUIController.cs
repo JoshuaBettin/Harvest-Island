@@ -128,6 +128,38 @@ namespace Inventory
                 return;
             }
 
+            IItemAction itemAction = inventoryItem.item as IItemAction;
+            if(itemAction != null)
+            {
+                inventoryUI.ShowItemAction(itemIndex);
+                inventoryUI.AddAction(itemAction.ActionName, () => PerformAction(itemIndex));
+            }
+
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
+            if (destroyableItem != null)
+            {
+                inventoryUI.AddAction("drop", () => DropItem(itemIndex, inventoryItem.quantity));
+            }
+        }
+
+        private void DropItem(int itemIndex, int quantity)
+        {
+            InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex);
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
+            inventoryData.PlaySound(destroyableItem.dropSFX, 1f);
+
+            inventoryData.RemoveItem(itemIndex, quantity);
+            inventoryUI.ResetSelection();
+        }
+
+        public void PerformAction(int itemIndex)
+        {
+            InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex);
+            if (inventoryItem.isEmpty)
+            {
+                return;
+            }
+
             IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
             if (destroyableItem != null)
             {
@@ -136,9 +168,18 @@ namespace Inventory
             }
 
             IItemAction itemAction = inventoryItem.item as IItemAction;
-            if(itemAction != null)
+            if (itemAction != null)
             {
+                inventoryData.PlaySound(itemAction.actionSFX, 1f);
                 itemAction.PerformAction(GameObject.FindGameObjectWithTag("Player"), inventoryItem.itemState);
+
+                IEquippableItem equippableItem = inventoryItem.item as IEquippableItem;
+                if (equippableItem != null)
+                {
+                    inventoryUI.DeactivateActionPanel();
+                    inventoryData.CheckIfItemStateEqualZero();
+                }
+                if (inventoryData.GetItemAt(itemIndex).isEmpty) inventoryUI.ResetSelection();
             }
         }
     }

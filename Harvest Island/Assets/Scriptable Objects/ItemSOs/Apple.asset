@@ -15,11 +15,15 @@ MonoBehaviour:
   isStackable: 1
   maxStackSize: 99
   title: Apple
+  sprite: {fileID: 526465315, guid: 08f867c61b34d444a81ee6e79c0bdf35, type: 3}
+  audioSource: {fileID: 2600797232286861433, guid: e8fc70833219643428a169766a2e9d17, type: 3}
   description: 'Ein Apfel kann schimmeln, was kannst du?
 
     Kann man auch vorher
     essen.'
-  sprite: {fileID: 526465315, guid: 08f867c61b34d444a81ee6e79c0bdf35, type: 3}
+  defaultParameterList: []
   modifierDataList:
   - statModifier: {fileID: 11400000, guid: 575f82e9c800b964085ea4ea55da9d39, type: 2}
     value: 10
+  <actionSFX>k__BackingField: {fileID: 8300000, guid: 0132a3c348ab7854e9710f1dce7b9781, type: 3}
+  <dropSFX>k__BackingField: {fileID: 8300000, guid: 96f1ef0bc107cef40941fcfef0afd47a, type: 3}

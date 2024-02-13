@@ -9,12 +9,16 @@ namespace Inventory.Data
     [CreateAssetMenu(menuName = "ConsumableItemSO")]
     public class ConsumableItemSO : ItemSO, IDestroyableItem, IItemAction
     {
-        [SerializeField]
-        private List<ModifierData> modifierDataList = new List<ModifierData>();
-
         public string ActionName => "Consume";
 
+        [field: SerializeField]
         public AudioClip actionSFX { get; private set; }
+
+        [field: SerializeField]
+        public AudioClip dropSFX { get; private set; }
+
+        [SerializeField]
+        private List<ModifierData> modifierDataList = new List<ModifierData>();
 
         public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
         {
@@ -25,23 +29,5 @@ namespace Inventory.Data
             return true;
         }
 
-    }
-    public interface IDestroyableItem
-    {
-
-    }
-
-    public interface IItemAction
-    {
-        public string ActionName { get; }
-        public AudioClip actionSFX { get; }
-        bool PerformAction(GameObject character, List<ItemParameter> itemState);
-    }
-
-    [Serializable]
-    public class ModifierData
-    {
-        public CharacterStatModifierSO statModifier;
-        public float value;
     }
 }

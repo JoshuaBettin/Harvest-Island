@@ -6,12 +6,19 @@ using UnityEngine;
 namespace Inventory.Data
 {
     [CreateAssetMenu(menuName = "EquippableItemSO")]
-    public class EquippableItemSO : ItemSO, IItemAction,  IDestroyableItem
+    public class EquippableItemSO : ItemSO, IItemAction,  IDestroyableItem, IEquippableItem
     {
         public string ActionName => "Equip";
 
+        [field: SerializeField]
         public AudioClip actionSFX { get; private set; }
-        
+
+        [field: SerializeField]
+        public AudioClip dropSFX { get; private set; }
+
+        [field: SerializeField]
+        public AudioClip breakSFX { get; private set; }
+
         public bool PerformAction(GameObject character, List<ItemParameter> itemState)
         {
             AgentWeapon weaponSystem = character.GetComponent<AgentWeapon>();
