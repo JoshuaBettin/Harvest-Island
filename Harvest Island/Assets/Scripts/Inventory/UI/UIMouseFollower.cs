@@ -38,6 +38,5 @@ namespace Inventory.UI
             Debug.Log($"Item toggled: {value}");
             gameObject.SetActive(value);
         }
-
     }
 }

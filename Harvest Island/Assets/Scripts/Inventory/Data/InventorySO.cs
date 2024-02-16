@@ -16,7 +16,9 @@ namespace Inventory.Data
         private int size = 14;
         public int Size { get => size; }
 
-        public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated; 
+        public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
+
+        private int lastChangedItemQuantity = 1;
 
         public void Initialize()
         {
@@ -43,8 +45,29 @@ namespace Inventory.Data
             }
 
             quantity = AddStackableItem(item, quantity);
+            ChangeLastChangedItemQuantity(quantity);
             InformAboutChange();
             return quantity;
+        }
+
+        /// <summary>
+        /// After Adding an item to someones inventory the int is changed
+        /// so that others can get the information how many of the item was picked up
+        /// </summary>
+        /// <returns></returns>
+        private void ChangeLastChangedItemQuantity(int quantity)
+        {
+            lastChangedItemQuantity = quantity;
+        }
+
+        /// <summary>
+        /// Returns the int in order to update the amount of an item in the world 
+        /// after someone picked up an item
+        /// </summary>
+        /// <returns></returns>
+        public int ReturnLastChangedItemQuantity()
+        {
+            return lastChangedItemQuantity;
         }
 
         private int AddItemToFirstFreeSlot(ItemSO item, int quantity, List<ItemParameter> itemState = null)
@@ -158,13 +181,14 @@ namespace Inventory.Data
             }
         }
 
+        /*
         public void CheckIfItemStateEqualZero()
         {
             for (int i = 0; i < inventoryItems.Count; i++)
             {
                 for (int j = 0; j < inventoryItems[i].itemState.Count; j++)
                 {
-                    if (inventoryItems[i].itemState[j].value == 0)
+                    if (inventoryItems[i].itemState[j].value <= 0)
                     {
                         IEquippableItem equippableItem = inventoryItems[i].item as IEquippableItem;
                         PlaySound(equippableItem.breakSFX, 0.75f);
@@ -174,6 +198,7 @@ namespace Inventory.Data
                 }
             }
         }
+        */
 
         public void PlaySound(AudioClip audioClip, float volumeScale)
         {

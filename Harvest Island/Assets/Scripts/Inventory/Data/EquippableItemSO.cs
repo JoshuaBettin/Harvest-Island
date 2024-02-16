@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Inventory.Data
 {
     [CreateAssetMenu(menuName = "EquippableItemSO")]
-    public class EquippableItemSO : ItemSO, IItemAction,  IDestroyableItem, IEquippableItem
+    public class EquippableItemSO : ItemSO, IItemAction, IDestroyableItem, IEquippableItem
     {
         public string ActionName => "Equip";
 
@@ -22,12 +22,17 @@ namespace Inventory.Data
         public bool PerformAction(GameObject character, List<ItemParameter> itemState)
         {
             AgentWeapon weaponSystem = character.GetComponent<AgentWeapon>();
-            if(weaponSystem != null)
+            if (weaponSystem != null)
             {
                 weaponSystem.SetWeapon(this, itemState == null ? DefaultParameterList : itemState);
                 return true;
             }
-            return false; 
+            return false;
+        }
+
+        public AgentWeapon ReturnItemToEquip(GameObject character)
+        {
+            return character.GetComponent<AgentWeapon>();
         }
     }
 }

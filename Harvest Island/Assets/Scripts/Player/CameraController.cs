@@ -25,9 +25,15 @@ public class CameraController : MonoBehaviour
     }
     private void Start()
     {
+        
         if(!pv.IsMine)
         {
             cameraHolder.SetActive(false);
+        }
+        
+        if (!PhotonNetwork.IsConnected)
+        {
+            cameraHolder.SetActive(true);
         }
     }
     private void Update()

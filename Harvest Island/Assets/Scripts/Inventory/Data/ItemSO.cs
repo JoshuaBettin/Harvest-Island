@@ -57,6 +57,8 @@ namespace Inventory.Data
     public interface IEquippableItem
     {
         public AudioClip breakSFX { get; }
+
+        public AgentWeapon ReturnItemToEquip(GameObject character);
     }
 
     public interface IItemAction

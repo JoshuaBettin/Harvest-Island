@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Canvas
+  - ItemImage
   layers:
   - Default
   - TransparentFX

@@ -24,6 +24,9 @@ namespace Inventory.UI
         [SerializeField]
         private UIItemActionPanel actionPanel;
 
+        [SerializeField]
+        private UIAgentWeaponPanel weaponPanel;
+
         private List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
 
         private int currentlyDraggedIndex = -1;
@@ -152,10 +155,21 @@ namespace Inventory.UI
             currentlyDraggedIndex = -1;
         }
 
-        public void CreateDraggeditem(Sprite sprite, int quantity)
+        public void CreateDraggedItem(Sprite sprite, int quantity)
         {
             mouseFollower.Toggle(true);
             mouseFollower.SetData(sprite, quantity);
+        }
+
+        public void UpdateEquippedItem(Sprite sprite, int durability)
+        {
+
+                weaponPanel.SetData(sprite, durability);
+        }
+
+        public void UnEquipItem()
+        {
+            weaponPanel.SetAgentWeaponEmpty();
         }
 
         public void ResetSelection()

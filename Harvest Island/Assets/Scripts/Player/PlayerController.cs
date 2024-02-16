@@ -10,21 +10,28 @@ public class PlayerController : MonoBehaviour
     private float Speed;
     [SerializeField]
     private Rigidbody2D rb;
+    [SerializeField]
+    private Animator anim; 
 
-    SpriteRenderer spriteRenderer;
+    PhotonView view;
 
-    PhotonView view; 
+    public float x;
+    public float y;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         view = GetComponent<PhotonView>();
     }
 
     private void FixedUpdate()
     {
         if (view.IsMine)
+        {
+            Move();
+        }
+
+        if (!PhotonNetwork.IsConnected)
         {
             Move();
         }
@@ -39,6 +46,9 @@ public class PlayerController : MonoBehaviour
         // Move Horizontal
 
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * Speed * Time.deltaTime * 100, rb.velocity.y);
+
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
 
         if (Input.GetAxis("Horizontal") < 0 && this.transform.localScale.x >= 0)
         {

@@ -23,11 +23,15 @@ public class SandCell : GridCell
 
     public override void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("SandCell");
-        Debug.Log(eventData.hovered.Count);
-
         //pv.RPC("ChangeTile", RpcTarget.All, eventData.pointerCurrentRaycast.worldPosition, type);
-        gridUpdater.ChangeTile(Vector3Int.FloorToInt(eventData.pointerCurrentRaycast.worldPosition), type);
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Debug.Log("SandCell");
+            Debug.Log(eventData.hovered.Count);
+
+
+            gridUpdater.ChangeTile(Vector3Int.FloorToInt(eventData.pointerCurrentRaycast.worldPosition), type);
+        }
     }
 
     [PunRPC]

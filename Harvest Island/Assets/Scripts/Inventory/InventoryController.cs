@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
 using System.Text;
+using UnityEngine.InputSystem;
 
 namespace Inventory
 {
-    public class InventoryUIController : MonoBehaviour
+    public class InventoryController : MonoBehaviour
     {
         [SerializeField]
         private UIInventoryPage inventoryUI;
@@ -17,14 +18,53 @@ namespace Inventory
         [SerializeField]
         private InventorySO inventoryData;
 
+        private AgentWeapon agentWeapon;
+
         public List<InventoryItem> initialItems = new List<InventoryItem>();
 
         public void Start()
         {
+            agentWeapon = GameObject.FindGameObjectWithTag("Player").GetComponent<AgentWeapon>(); 
+
             PrepareUI();
             PrepareInventoryData();
 
             inventoryUI.Show(); inventoryUI.Hide(); // to fix Bug: else u need to double press "I"-Key at the start
+        }
+
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Debug.Log("I");
+                if (inventoryUI.isActiveAndEnabled == false)
+                {
+                    Debug.Log("Show");
+                    inventoryUI.Show();
+                    foreach (var item in inventoryData.GetCurrentInventoryState())
+                    {
+                        inventoryUI.UpdateData(item.Key, item.Value.item.Sprite, item.Value.quantity);
+                    }
+                }
+                else
+                {
+                    inventoryUI.Hide();
+                }
+            }
+
+            if (Mouse.current.rightButton.wasPressedThisFrame)
+            {
+                Vector2 vector = new Vector2(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue());
+                if (vector.x < 350 && vector.y > 375)
+                {
+                    Debug.Log("RightClick");
+                    agentWeapon.UseWeapon();
+                    if (agentWeapon.Weapon != null) inventoryData.PlaySound(agentWeapon.Weapon.actionSFX, 1f);
+
+                    if (agentWeapon.Weapon != null) inventoryUI.UpdateEquippedItem(agentWeapon.Weapon.Sprite, agentWeapon.Durability);
+                    else inventoryUI.UnEquipItem();
+                }
+            }
         }
 
         private void PrepareInventoryData()
@@ -55,27 +95,6 @@ namespace Inventory
             inventoryUI.OnSwapItems += HandleSwapItems;
             inventoryUI.OnStartDragging += HandleDragging;
             inventoryUI.OnItemActionRequested += HandleItemActionRequest;
-        }
-
-        public void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                Debug.Log("I");
-                if (inventoryUI.isActiveAndEnabled == false)
-                {
-                    Debug.Log("Show");
-                    inventoryUI.Show();
-                    foreach (var item in inventoryData.GetCurrentInventoryState())
-                    {
-                        inventoryUI.UpdateData(item.Key, item.Value.item.Sprite, item.Value.quantity);
-                    }
-                }
-                else
-                {
-                    inventoryUI.Hide();
-                }
-            }
         }
 
         private void HandleDescriptionRequest(int itemIndex)
@@ -117,7 +136,7 @@ namespace Inventory
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex);
             if (inventoryItem.isEmpty) return;
 
-            inventoryUI.CreateDraggeditem(inventoryItem.item.Sprite, inventoryItem.quantity);
+            inventoryUI.CreateDraggedItem(inventoryItem.item.Sprite, inventoryItem.quantity);
         }
 
         private void HandleItemActionRequest(int itemIndex)
@@ -146,7 +165,7 @@ namespace Inventory
         {
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex);
             IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
-            inventoryData.PlaySound(destroyableItem.dropSFX, 1f);
+            inventoryData.PlaySound(destroyableItem.dropSFX, 1f );
 
             inventoryData.RemoveItem(itemIndex, quantity);
             inventoryUI.ResetSelection();
@@ -176,8 +195,15 @@ namespace Inventory
                 IEquippableItem equippableItem = inventoryItem.item as IEquippableItem;
                 if (equippableItem != null)
                 {
+                    Debug.Log(agentWeapon.Weapon.Sprite + " " + agentWeapon.Durability);
                     inventoryUI.DeactivateActionPanel();
-                    inventoryData.CheckIfItemStateEqualZero();
+
+                   // inventoryUI.UpdateEquippedItem(agentWeapon.Weapon.Sprite, agentWeapon.Durability);
+
+                   // agentWeapon.UseWeapon();
+
+                    if (agentWeapon.Weapon != null) inventoryUI.UpdateEquippedItem(agentWeapon.Weapon.Sprite, agentWeapon.Durability);
+                   // else inventoryUI.UnEquipItem();
                 }
                 if (inventoryData.GetItemAt(itemIndex).isEmpty) inventoryUI.ResetSelection();
             }
