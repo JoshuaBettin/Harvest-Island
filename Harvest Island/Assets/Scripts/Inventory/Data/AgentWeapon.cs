@@ -29,6 +29,13 @@ namespace Inventory.Data
 
         public int Durability { get => durability; }
 
+        private Animator playerAnimator;
+
+        private void Start()
+        {
+            playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+        }
+
         public void SetWeapon(EquippableItemSO weaponItemSO, List<ItemParameter> itemState)
         {
             if (Weapon != null)
@@ -41,8 +48,6 @@ namespace Inventory.Data
             {
                 this.durability = (int)parameter.value;
             }
-
-            // ModifyParameters();
         }
 
         public void ModifyParameters()
@@ -64,21 +69,31 @@ namespace Inventory.Data
             }
         }
 
-        /// <summary>
-        /// shift below to inventoryUi Controller 
-        /// </summary>
         public virtual void UseWeapon()
         {
             if (weapon != null)
             {
                 this.ModifyParameters();
+                PlayItemAnitmation();
                 inventoryData.PlaySound(weapon.actionSFX, 1);
+
                 if (durability <= 0)
                 {
                     inventoryData.PlaySound(weapon.breakSFX, 1);
                     weapon = null;
                 }
+
+
+
+
             }
         }
+
+        public void PlayItemAnitmation()
+        {
+            playerAnimator.SetTrigger("Axe");
+
+        }
+
     }
 }

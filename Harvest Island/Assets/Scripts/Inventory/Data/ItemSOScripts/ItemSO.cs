@@ -17,8 +17,6 @@ namespace Inventory.Data
         private string title;
         [SerializeField]
         private Sprite sprite;
-        [SerializeField]
-        private AudioSource audioSource;
 
         [SerializeField]
         [TextArea]
@@ -32,7 +30,6 @@ namespace Inventory.Data
         public string Title { get => title; set => title = value; }
         public string Description { get => description; set => description = value; }
         public Sprite Sprite { get => sprite; set => sprite = value; }
-        public AudioSource AudioSource { get => audioSource; set => audioSource = value; }
         public List<ItemParameter> DefaultParameterList { get => defaultParameterList; set => defaultParameterList = value; }
 
     }

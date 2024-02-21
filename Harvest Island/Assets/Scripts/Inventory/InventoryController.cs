@@ -54,8 +54,7 @@ namespace Inventory
 
             if (Mouse.current.rightButton.wasPressedThisFrame)
             {
-                Vector2 vector = new Vector2(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue());
-                if (vector.x < 350 && vector.y > 375)
+                if (inventoryUI.IsHidden)
                 {
                     Debug.Log("RightClick");
                     agentWeapon.UseWeapon();

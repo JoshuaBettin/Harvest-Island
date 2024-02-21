@@ -35,6 +35,9 @@ namespace Inventory.UI
 
         public event Action<int, int> OnSwapItems;
 
+        private bool isHidden;
+        public bool  IsHidden { get => isHidden; }
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -86,6 +89,7 @@ namespace Inventory.UI
             itemDescription.ResetDescription();
             ResetSelection();
 
+            isHidden = false;
         }
 
         public void Hide()
@@ -95,6 +99,7 @@ namespace Inventory.UI
             actionPanel.Toggle(false);
             ResetDraggedItem();
 
+            isHidden = true;
         }
 
         public void UpdateData(int itemIndex, Sprite sprite, int quantity)

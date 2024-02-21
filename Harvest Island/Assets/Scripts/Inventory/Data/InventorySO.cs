@@ -181,30 +181,18 @@ namespace Inventory.Data
             }
         }
 
-        /*
-        public void CheckIfItemStateEqualZero()
-        {
-            for (int i = 0; i < inventoryItems.Count; i++)
-            {
-                for (int j = 0; j < inventoryItems[i].itemState.Count; j++)
-                {
-                    if (inventoryItems[i].itemState[j].value <= 0)
-                    {
-                        IEquippableItem equippableItem = inventoryItems[i].item as IEquippableItem;
-                        PlaySound(equippableItem.breakSFX, 0.75f);
-                        inventoryItems[i] = InventoryItem.GetEmptyItem();
-                        InformAboutChange();
-                    }
-                }
-            }
-        }
-        */
-
         public void PlaySound(AudioClip audioClip, float volumeScale)
         {
             AudioSource audioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
             if (audioSource != null) audioSource.PlayOneShot(audioClip, volumeScale);
         }
+
+        /*
+        public void PlayAnimation(Animation animation)
+        {
+            animation.Play();
+        }
+        */
     }
 
     [Serializable]
