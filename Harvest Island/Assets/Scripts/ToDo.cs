@@ -17,16 +17,30 @@ public class ToDo
     - player pickup sounds                                                              done    but not separated in order for others to get feedback if someone picked something up
                                                                                                 
 
-    think about next steps in the game:
+    think about next steps:
 
-    - attacking damages players
+    - attacking damages players                                                         done
+    - revive players after killing                                                      done
+    - sound when player gets damaged                                                    done                 
+    - animation when player gets damaged                                                done    changed spriterenderer.color via RPC instead of animation
+    - death panel countdown until revive                                                done
+    - change player position before revive                                              done
+
+    - login name for each player                                                        done
+    - kill count for each player
+    - drop items on player death
+
+    - attack speed limit
+
+    - join older rooms in lobby                                                         done
 
 
     - ui mousefollower position fixen
 
-
-    - ingame menu
     - background music
 
+    - ingame menu
+
+    - change animation triggers to photon RPCs
     */
 }

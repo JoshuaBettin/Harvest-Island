@@ -11,7 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
     [SerializeField]
-    private Animator anim; 
+    private Animator anim;
+    [SerializeField]
+    private Transform attackPoint, player;
+    [SerializeField]
+    private HealthBar healthbar;
 
     PhotonView view;
 
@@ -28,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (view.IsMine)
+        if (view.IsMine && healthbar.Health > 0)
         {
             Move();
         }
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     /// <summary>
     /// Führt die Bewegung des Spielers in die gewünschte Richtung aus
-    /// und dreht das Prefab je nach Laufrichtung um. 
+    /// und steuert entsprechend die animationen
     /// </summary>
     private void Move()
     {
@@ -59,14 +63,30 @@ public class PlayerController : MonoBehaviour
 
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
-        
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) MoveUp = true;
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            MoveUp = true;
+            attackPoint.position = player.transform.position + new Vector3(0, 0.5f, 0);
+        }
         else MoveUp = false;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) MoveLeft = true;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            MoveLeft = true;
+            attackPoint.position = player.transform.position + new Vector3(-0.5f, 0, 0);
+        }
         else MoveLeft = false;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) MoveRight = true;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            MoveRight = true;
+            attackPoint.position = player.transform.position + new Vector3(0.5f, 0, 0);
+        }
         else MoveRight = false;
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) MoveDown = true;
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            MoveDown = true;
+            attackPoint.position = player.transform.position + new Vector3(0, -0.5f, 0);
+        }
         else MoveDown = false;
 
         anim.SetBool("MoveUp", MoveUp);

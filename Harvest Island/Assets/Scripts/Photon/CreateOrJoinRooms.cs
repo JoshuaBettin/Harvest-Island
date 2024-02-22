@@ -11,6 +11,10 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private TMP_InputField createInput;
+    [SerializeField]
+    private TMP_InputField joinExistingRoomInput;
+    [SerializeField]
+    private TMP_InputField nameInput;
 
     [SerializeField]
     private Transform roomListingParent;
@@ -21,29 +25,25 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
 
     private List<RoomInfo> cachedRoomList = new List<RoomInfo>();
 
-
-    public TextMeshProUGUI textfield;
-
     public List<RoomInfo> newList;
+
     bool alreadyInList = false;
 
-    public void Start()
-    {
-        
-    }
-    public void Update()
-    {
-
-    }
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(createInput.text);
     }
 
+    public void JoinOlderRoom()
+    {
+        PhotonNetwork.JoinRoom(joinExistingRoomInput.text);
+    }
+
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.NickName = nameInput.text;
         PhotonNetwork.LoadLevel("GameScene");
-        //  float loadPercentage = PhotonNetwork.LevelLoadingProgress;
+        //  float loadPercentage = PhotonNetwork.LevelLoadingProgress; -> level loading atm to fast to make sense
 
     }
 
@@ -113,11 +113,5 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
 
             roomItem.transform.GetComponent<JoinRoomButton>().Name = room.Name;
         }
-    }
-
-    public void TestRooms()
-    {
-        GameObject roomItem = Instantiate(roomListingPrefab, roomListingParent);
-
     }
 }

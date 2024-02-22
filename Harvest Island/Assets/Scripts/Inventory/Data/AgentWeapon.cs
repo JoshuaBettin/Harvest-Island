@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,14 @@ namespace Inventory.Data
 
         [SerializeField]
         private InputAction inputAction;
+
+        [SerializeField]
+        private Transform attackPoint;
+
+        [SerializeField]
+        private float attackRange;
+        [SerializeField]
+        private LayerMask enemyLayers;
 
         public EquippableItemSO Weapon { get => weapon; }
 
@@ -73,6 +82,21 @@ namespace Inventory.Data
         {
             if (weapon != null)
             {
+                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+                foreach (Collider2D enemy in hitEnemies)
+                {
+                    Debug.Log("Damaged");
+
+                    PhotonView thisPv = PhotonView.Get(this);
+                    int thisPvID = thisPv.ViewID;
+
+                    PhotonView hitPv = enemy.gameObject.GetPhotonView();
+                    int hitPvID = hitPv.ViewID;
+
+                    hitPv.RPC("ChangeHealth", RpcTarget.All, -10f, hitPvID, thisPvID);
+                }
+
                 this.ModifyParameters();
                 PlayItemAnitmation();
                 inventoryData.PlaySound(weapon.actionSFX, 1);
@@ -82,11 +106,15 @@ namespace Inventory.Data
                     inventoryData.PlaySound(weapon.breakSFX, 1);
                     weapon = null;
                 }
-
-
-
-
             }
+        }
+
+        [PunRPC]
+        public void ChangeHealth(float value, int hitPvID, int thisPvID)
+        {
+            HealthBar healthBar = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthBar>();
+            PhotonView pv = PhotonNetwork.GetPhotonView(hitPvID);
+            if(hitPvID != thisPvID) if(pv.IsMine) healthBar.ChangeHealth(value);
         }
 
         public void PlayItemAnitmation()
@@ -95,5 +123,11 @@ namespace Inventory.Data
 
         }
 
+        public void OnDrawGizmos()
+        {
+            if (attackPoint == null) return; 
+
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        }
     }
 }

@@ -7,6 +7,9 @@ TagManager:
   - Item
   - Canvas
   - ItemImage
+  - HealthBar
+  - DeathPanelParent
+  - CounterText
   layers:
   - Default
   - TransparentFX
