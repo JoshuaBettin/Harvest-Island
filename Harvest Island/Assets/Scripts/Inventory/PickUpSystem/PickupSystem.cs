@@ -14,10 +14,23 @@ public class PickupSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Item item = collision.GetComponent<Item>();
+        GameObject item = collision.gameObject;
+        PhotonView itemView = item.GetPhotonView();
+        int viewID = itemView.ViewID;
+
+        PhotonView pv = PhotonView.Get(this);
+        pv.RPC("PickUpItem", RpcTarget.AllBuffered, viewID);
+    }
+
+    [PunRPC]
+    private void PickUpItem(int viewID)
+    {
+        PhotonView itemView = PhotonNetwork.GetPhotonView(viewID);
+        GameObject itemObj = itemView.gameObject;
+        Item item = itemObj.GetComponent<Item>();
+
         if (item != null)
         {
-
             int oldQuantity = item.Quantity;
             int remainingQuantity;
 
@@ -30,9 +43,8 @@ public class PickupSystem : MonoBehaviour
             {
                 item.Quantity = remainingQuantity;
 
-                    if (oldQuantity > remainingQuantity) item.PlayPickupSound();
+                if (oldQuantity > remainingQuantity) item.PlayPickupSound();
             }
         }
-
     }
 }

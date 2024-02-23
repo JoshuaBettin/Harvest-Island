@@ -21,11 +21,22 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private float respawnMinX, respawnMaxX, respawnMinY, respawnMaxY;
 
+    [SerializeField]
+    private GameObject applePrefab, axePrefab;
+
     public void Start()
-    { slider = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Slider>();
-        float distract = -10;
+    {   
+        slider = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Slider>();
+        float distract = -50;
         ChangeHealth(distract);
     }
+
+    public void HealHealth(float value)
+    {
+        health += value;
+        slider.value = health;
+    }
+
 
     /// <summary>
     /// returns true if player health reached 0 or below
@@ -62,7 +73,7 @@ public class HealthBar : MonoBehaviour
             pv.RPC("KillPlayer", RpcTarget.All, viewID);
 
             ActivateDeathPanel();
-
+            pv.RPC("DropItemsOnDeath", RpcTarget.AllBuffered);
             StartCoroutine(RevivePlayerCoroutine(viewID));
 
             return true;
@@ -100,6 +111,8 @@ public class HealthBar : MonoBehaviour
         sr.enabled = false;
         Collider2D collider = player.GetComponent<Collider2D>();
         collider.enabled = false;
+        TMP_Text playerName = player.GetComponentInChildren<TMP_Text>();
+        playerName.enabled = false;
     }
 
     [PunRPC]
@@ -111,6 +124,8 @@ public class HealthBar : MonoBehaviour
         sr.enabled = true;
         Collider2D collider = player.GetComponent<Collider2D>();
         collider.enabled = true;
+        TMP_Text playerName = player.GetComponentInChildren<TMP_Text>();
+        playerName.enabled = true;
     }
 
     private void ActivateDeathPanel()
@@ -143,6 +158,13 @@ public class HealthBar : MonoBehaviour
         pv.gameObject.transform.position = new Vector3(UnityEngine.Random.Range(respawnMinX, respawnMaxX), UnityEngine.Random.Range(respawnMinY, respawnMaxY), 0);
         ChangeHealth(100);
         DeactivateDeathPanel();
+    }
+
+    [PunRPC]
+    public void DropItemsOnDeath()
+    {
+        PhotonNetwork.Instantiate(applePrefab.name, this.gameObject.transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(axePrefab.name, this.gameObject.transform.position, Quaternion.identity);
     }
 }
     

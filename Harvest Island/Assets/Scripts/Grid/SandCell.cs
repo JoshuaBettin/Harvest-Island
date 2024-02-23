@@ -21,6 +21,7 @@ public class SandCell : GridCell
         this.type = CellType.Sand;
     }
 
+    /*
     public override void OnPointerClick(PointerEventData eventData)
     {
         //pv.RPC("ChangeTile", RpcTarget.All, eventData.pointerCurrentRaycast.worldPosition, type);
@@ -33,6 +34,7 @@ public class SandCell : GridCell
             gridUpdater.ChangeTile(Vector3Int.FloorToInt(eventData.pointerCurrentRaycast.worldPosition), type);
         }
     }
+    */
 
     [PunRPC]
     public void ChangeTile(Vector3 vector, GridCell.CellType type)

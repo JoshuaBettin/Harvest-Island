@@ -51,6 +51,8 @@ MonoBehaviour:
   - SetPlayerName
   - InstantiateUIforKillCount
   - IncreaseKillCount
+  - DropItemsOnDeath
+  - PickUpItem
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

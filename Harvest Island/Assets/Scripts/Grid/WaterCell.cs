@@ -19,8 +19,10 @@ public class WaterCell : GridCell, IPointerClickHandler
         
     }
 
+    /*
     public override void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("WaterCell");
     }
+    */
 }

@@ -786,6 +786,8 @@ MonoBehaviour:
   respawnMaxX: 8
   respawnMinY: -5
   respawnMaxY: 5
+  applePrefab: {fileID: 2600797232286861432, guid: 1593628be9665224fb98a366d92a4e0a, type: 3}
+  axePrefab: {fileID: 7546729426347456373, guid: 38370d1e075c2744e8a4bf1bb99e03c9, type: 3}
 --- !u!1 &8172943352334844640
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class SoilCell : GridCell
         this.type = CellType.Soil;
     }
 
+    /*
     public override void OnPointerClick(PointerEventData eventData)
     { 
 
@@ -33,6 +34,7 @@ public class SoilCell : GridCell
             gridUpdater.ChangeTile(Vector3Int.FloorToInt(eventData.pointerCurrentRaycast.worldPosition), type);
         }
     }
+    */
 
     [PunRPC]
     public void ChangeTile(Vector3 vector, GridCell.CellType type)

@@ -22,6 +22,9 @@ namespace Inventory
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
 
+        public float timeBetweenAttacks;
+        private float timer = 0;
+
         public void Start()
         {
             agentWeapon = GameObject.FindGameObjectWithTag("Player").GetComponent<AgentWeapon>(); 
@@ -51,16 +54,22 @@ namespace Inventory
                 }
             }
 
-            if (Mouse.current.rightButton.wasPressedThisFrame)
+            timer += Time.deltaTime;
+            if (timer > timeBetweenAttacks)
             {
-                if (inventoryUI.IsHidden)
+                if (Mouse.current.rightButton.wasPressedThisFrame)
                 {
-                    Debug.Log("RightClick");
-                    agentWeapon.UseWeapon();
-                    if (agentWeapon.Weapon != null) inventoryData.PlaySound(agentWeapon.Weapon.actionSFX, 1f);
+                    if (inventoryUI.IsHidden)
+                    {
+                        Debug.Log("RightClick");
+                        agentWeapon.UseWeapon();
+                        if (agentWeapon.Weapon != null) inventoryData.PlaySound(agentWeapon.Weapon.actionSFX, 1f);
 
-                    if (agentWeapon.Weapon != null) inventoryUI.UpdateEquippedItem(agentWeapon.Weapon.Sprite, agentWeapon.Durability);
-                    else inventoryUI.UnEquipItem();
+                        if (agentWeapon.Weapon != null) inventoryUI.UpdateEquippedItem(agentWeapon.Weapon.Sprite, agentWeapon.Durability);
+                        else inventoryUI.UnEquipItem();
+
+                        timer = 0;
+                    }
                 }
             }
         }
