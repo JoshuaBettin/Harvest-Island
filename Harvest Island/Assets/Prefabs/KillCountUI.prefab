@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8620878706384448975}
   - component: {fileID: 8620878706384448974}
   - component: {fileID: 8620878706384448969}
-  - component: {fileID: 4351297952886599119}
   m_Layer: 5
   m_Name: KillCountUI
   m_TagString: Untagged
@@ -106,18 +105,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &4351297952886599119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8620878706384448971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 316f64439a6dd0243a6346ad9e52a3d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8620878707486603105
 GameObject:
   m_ObjectHideFlags: 0

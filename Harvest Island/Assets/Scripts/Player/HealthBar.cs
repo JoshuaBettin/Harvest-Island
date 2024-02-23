@@ -27,7 +27,12 @@ public class HealthBar : MonoBehaviour
         ChangeHealth(distract);
     }
 
-    public void ChangeHealth(float value)
+    /// <summary>
+    /// returns true if player health reached 0 or below
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool ChangeHealth(float value)
     {
         health += value;
 
@@ -50,7 +55,7 @@ public class HealthBar : MonoBehaviour
         // hurt animation trigger
         slider.value = health;
 
-        if (health == 0)
+        if (health <= 0)
         {
             // deathsound;
 
@@ -59,7 +64,11 @@ public class HealthBar : MonoBehaviour
             ActivateDeathPanel();
 
             StartCoroutine(RevivePlayerCoroutine(viewID));
+
+            return true;
         }
+
+        return false;
     }
 
     public IEnumerator PlayerHurtCoroutine(int viewID)

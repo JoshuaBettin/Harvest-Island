@@ -26,11 +26,12 @@ public class ToDo
     - death panel countdown until revive                                                done
     - change player position before revive                                              done
 
-    - login name for each player                                                        done
-    - kill count for each player
+    - login name for each player                                                        done                                             
+    - kill count for each player                                                        done
     - drop items on player death
-
+    - disable player names when dead
     - attack speed limit
+    - fix bug where health is falsly displayed after eating apple
 
     - join older rooms in lobby                                                         done
 

@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 
-public class SpawnPlayers : MonoBehaviour
+public class SpawnPlayers : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private GameObject playerPrefab;
@@ -19,19 +20,38 @@ public class SpawnPlayers : MonoBehaviour
         if (PhotonNetwork.InRoom)
         {
             Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY));
-            GameObject Player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
-            Player.GetComponentInChildren<TMP_Text>().text = PhotonNetwork.NickName;
-            InstantiateKillCountUI();
+            GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+
+            PhotonView playerPv = player.GetPhotonView();
+            int viewID = playerPv.ViewID;
+
+            Player localPlayer = PhotonNetwork.LocalPlayer;
+            string playerName = localPlayer.NickName;
+
+            PhotonView pv = PhotonView.Get(this);
+            pv.RPC("SetPlayerName", RpcTarget.AllBuffered, viewID, playerName);
+            pv.RPC("InstantiateUIforKillCount", RpcTarget.AllBuffered, playerName);
+
         }
         else
         {
             Instantiate(playerPrefab, this.transform);
         }
-
     }
 
-    private void InstantiateKillCountUI()
+
+    [PunRPC]
+    public void SetPlayerName(int viewID, string playerName)
     {
-        killCountUI.InstantiateKillCountUI(PhotonNetwork.NickName);
+        PhotonView playerView = PhotonNetwork.GetPhotonView(viewID);
+        GameObject player = playerView.gameObject;
+
+        player.GetComponentInChildren<TMP_Text>().text = playerName;
+    }
+
+    [PunRPC]
+    public void InstantiateUIforKillCount(string playerName)
+    {
+        killCountUI.InstantiateKillCountUI(playerName);
     }
 }

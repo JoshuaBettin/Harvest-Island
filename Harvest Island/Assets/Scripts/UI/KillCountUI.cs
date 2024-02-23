@@ -10,6 +10,8 @@ public class KillCountUI : MonoBehaviour
     [SerializeField]
     private Transform killCountPanel;
 
+    public List<GameObject> killCountUIList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,8 +25,11 @@ public class KillCountUI : MonoBehaviour
     }
 
     public void InstantiateKillCountUI(string playerName)
-    {
+    { 
         GameObject killCountUI = Instantiate(killCountUIPrefab, killCountPanel);
+
+        killCountUIList.Add(killCountUI);
+
         killCountUI.transform.GetChild(0).GetComponent<TMP_Text>().text = playerName;
         killCountUI.transform.GetChild(1).GetComponent<TMP_Text>().text = 0 + "";
     }

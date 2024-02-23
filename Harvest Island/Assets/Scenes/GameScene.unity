@@ -15845,6 +15845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301991828}
   - component: {fileID: 301991827}
+  - component: {fileID: 301991829}
   m_Layer: 0
   m_Name: SpawnPlayers
   m_TagString: Untagged
@@ -15869,7 +15870,7 @@ MonoBehaviour:
   maxX: 5
   minY: -5
   maxY: 5
-  killCountUI: {fileID: 0}
+  killCountUI: {fileID: 406152958}
 --- !u!4 &301991828
 Transform:
   m_ObjectHideFlags: 0
@@ -15885,6 +15886,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &301991829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301991826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &310442508
 GameObject:
   m_ObjectHideFlags: 0
@@ -16762,9 +16785,10 @@ GameObject:
   - component: {fileID: 406152956}
   - component: {fileID: 406152955}
   - component: {fileID: 406152954}
+  - component: {fileID: 406152958}
   m_Layer: 5
   m_Name: KillCountPanel
-  m_TagString: Untagged
+  m_TagString: KillCountUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16867,6 +16891,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406152952}
   m_CullTransparentMesh: 1
+--- !u!114 &406152958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406152952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316f64439a6dd0243a6346ad9e52a3d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killCountUIPrefab: {fileID: 8620878706384448971, guid: 2b4592ee5fcb22d4cbeea21fb681982b, type: 3}
+  killCountPanel: {fileID: 406152953}
+  killCountUIName: 
+  killCountUIList: []
 --- !u!1 &407148610
 GameObject:
   m_ObjectHideFlags: 0
@@ -26869,7 +26909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 55, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &920600540
@@ -32515,7 +32555,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 361749409}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
