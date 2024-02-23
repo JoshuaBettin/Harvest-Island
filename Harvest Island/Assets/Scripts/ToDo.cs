@@ -45,6 +45,11 @@ public class ToDo
 
     - different hit sound for other players
 
+    - drop items on ground when drop an item 
+
+    - shop menu
+    - drop coins instead of items on player death
+
     // bugs:
 
     - ui mousefollower position fixen
@@ -54,6 +59,8 @@ public class ToDo
 
     - change animation triggers to photon RPCs
     - change time between attacks to attackspeed
+
+    - seperate agent weapon from axe usability
      
     // others: 
 
