@@ -36,20 +36,28 @@ public class ToDo
 
     - join older rooms in lobby                                                         done
 
-    - background music                                                                  done
+    - background music                                                                  done    (temporarily)
 
-    - change lobby ui
+    - change lobby ui                                                                   done    (temporarily)
 
     - ingame menu
+    - leave game per escape button
+
+    - different hit sound for other players
 
     // bugs:
 
     - ui mousefollower position fixen
+    - camera moving on death
 
     // better code:
 
     - change animation triggers to photon RPCs
     - change time between attacks to attackspeed
      
+    // others: 
+
+    - remove input action from assets because not used
+
      */
 }

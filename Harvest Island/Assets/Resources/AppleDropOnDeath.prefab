@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryItem: {fileID: 11400000, guid: 62572aefe3fcd924b8f6051ec73e8b04, type: 2}
-  quantity: 3
+  quantity: 4
   equipSFX: {fileID: 8300000, guid: 928b8f3f3638ca743a3c1f54ceb1158b, type: 3}
   duration: 0.4
 --- !u!114 &-7439583906237581745

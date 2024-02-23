@@ -11,6 +11,7 @@ TagManager:
   - DeathPanelParent
   - CounterText
   - KillCountUI
+  - WaterCell
   layers:
   - Default
   - TransparentFX

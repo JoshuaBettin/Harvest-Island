@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1224672492363438086}
   - component: {fileID: 109255495656302414}
   - component: {fileID: -8892128360928593464}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: WaterCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
